@@ -97,4 +97,18 @@ def image_comments(request, id):
     else:
         return redirect('/')
 
+def save_comment(request):
+    """Display function for saving image comments"""
+    if request.method == 'POST':
+        comment = request.POST['comment']
+        image_id = request.POST['image_id']
+        image = Image.objects.get(id=image_id)
+        user = request.user
+        comment = Comments(comment=comment, image_id=image_id, user_id=user.id)
+        comment.save_comment()
+        image.total_comments = image.total_comments + 1
+        image.save()
+        return redirect('/snapcomment/'+str(image_id))
+    else:
+        return redirect('/')
 
