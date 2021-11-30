@@ -11,3 +11,11 @@ class CreatePostForm(ModelForm):
         model = Image
         fields = '__all__'
         exclude = ['likes', 'user']
+
+class UpdateProfileForm(ModelForm):
+    """A form for updating/editing user profile"""
+
+    class meta:
+        model = Image
+        fields = '__all__'
+        exclude = ['likes', 'user']
