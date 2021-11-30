@@ -5,7 +5,7 @@ from django.contrib import messages
 
 def user_login(request):
     """Function for user login"""
-    
+
     message = 'KINDLY LOGIN TO PROCEED'
     if request.method == 'POST':
         username = request.POST['username']
@@ -21,3 +21,10 @@ def user_login(request):
             return render(request,'reqistration/login.html')
     else:
         return render(request, 'registration/login.html',{"message":message})
+
+def user_logout(request):
+    """Function for signing out of the application"""
+
+    logout(request)
+    messages.success(request,("Signout Succesfull"))
+    return redirect('login')
