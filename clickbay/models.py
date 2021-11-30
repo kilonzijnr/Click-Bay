@@ -111,7 +111,14 @@ class Image(models.Model):
         comments = Comments.objects.filter(image = self)
         return comments
 
+class Comments(models.Model):
+    """Model class for image comments"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE)
+    comment = models.TextField()
 
+    def __str__(self):
+        return self.comment
 
 
 
