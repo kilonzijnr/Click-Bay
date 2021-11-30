@@ -60,4 +60,27 @@ def profile(request):
     images = Image.objects.filter(user_id=current_user.id)
     profile = Profile.objects.filter(username=current_user).first()
     return render(request,'profile.html', {"images":images, "profile":profile})
-    
+
+def like_image(request, id):
+    """Display function for Image Likes"""
+    likes = Likes.objects.filter(image_id=id).first()
+    if Likes.objects.filter(image_id=id, user_id=request.user.id).exists():
+        likes.delete()
+        image = Image.objects.get(id=id)
+        if image.total_likes == 0:
+            image.total_likes = 0
+            image.save()
+        else:
+            image.total_likes -= 1
+            image.save()
+        return redirect('/')
+    else:
+        likes = Likes(image_id=id, user_id=request.user.id)
+        likes.save()
+        image = Image.objects.get(id=id)
+        image.total_likes = image.total_liks +1
+        image.save()
+        return redirect('/')
+
+        
+
