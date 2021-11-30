@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% load django_bootstrap5%}
+{% block content%}
+
+{% if form.errors%}
+<div class="container">
+    <div class="alert text-center">
+        <span>There was a error with your form!</span>
+    </div>
+    {% endif %}
+    <div class="container">
+        <h5>{{ message }}</h5>
+        <form action="{% url 'signup' %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+    
+            <button class="btn btn-outline-secondary" type="submit">Sign Up</button>
+        </form>
+    </div>
+</div>
+{% endblock%}
