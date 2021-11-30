@@ -82,5 +82,19 @@ def like_image(request, id):
         image.save()
         return redirect('/')
 
-        
+def image_comments(request, id):
+    """Display function for image comments"""
+    image = Image.objects.get(id=id)
+    related_images = Image.objects.filter(user_id=image.user_id)
+    title = image.name
+    if Image.objects.filter(id=id).exists():
+        comments = Comments.objects.filter(image_id=id)
+        return render(request,'photos.html',
+        {'image':image, 
+        'comments':comments, 
+        'images':related_images,
+        'title':title}) 
+    else:
+        return redirect('/')
+
 
