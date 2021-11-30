@@ -53,4 +53,11 @@ def homepage(request):
     """Display function for all images"""
     images = Image.objects.all()
     return render(request, 'home.html', {"images":images})
+
+def profile(request):
+    """Display function for user profile"""
+    current_user = request.user
+    images = Image.objects.filter(user_id=current_user.id)
+    profile = Profile.objects.filter(username=current_user).first()
+    return render(request,'profile.html', {"images":images, "profile":profile})
     
