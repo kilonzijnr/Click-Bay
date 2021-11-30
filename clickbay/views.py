@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from .models import *
 # Create your views here.
 
 def user_login(request):
@@ -16,7 +17,7 @@ def user_login(request):
         if user is not None:
             login(request,user)
             messages.success(request,f" Hey {username} Welcome to Click Bay!")
-            return redirect('index')
+            return redirect('homepage')
         else:
             messages.success(request,"Something went wrong Kindly try to Login again")
             return render(request,'reqistration/login.html')
@@ -43,7 +44,13 @@ def user_signup(request):
             user = authenticate(username=username, password=password)
             login(request,user)
             messages.success(request,("Account created succesfully!"))
-            return redirect('index')
+            return redirect('homepage')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html',{"message":message, "form":form})
+
+def homepage(request):
+    """Display function for all images"""
+    images = Image.objects.all()
+    return render(request, 'home.html', {"images":images})
+    
