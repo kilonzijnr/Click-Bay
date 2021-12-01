@@ -112,3 +112,12 @@ def save_comment(request):
     else:
         return redirect('/')
 
+def user_profile(request,id):
+    """Display function for filtering a specific user"""
+    if User.objects.filter(id=id).exists():
+        user = User.objects.get(id=id)
+        images = Image.objects.filter(user_id=id)
+        profile = Profile.objects.filter(username_id=id).first()
+        return render(request,'user.html',{'images':images,'profile':profile, 'user':user})
+    else:
+        return redirect('/')
