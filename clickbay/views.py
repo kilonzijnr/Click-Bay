@@ -121,3 +121,16 @@ def user_profile(request,id):
         return render(request,'user.html',{'images':images,'profile':profile, 'user':user})
     else:
         return redirect('/')
+
+def search_images(request):
+    """View functtion for searching for images"""
+    if 'search' in request.GET and request.GET['search']:
+        search_term = request.GET.get ('search').lower()
+        images = Image.search_by_image(search_term)
+        message = f'{search_term}'
+        title = message
+
+        return render(request, 'search.html', {'success':message, 'images':images, "title":title})
+    else:
+        message = 'Invalid Search'
+        return render(request,'search.html',{'danger':message})
