@@ -3,6 +3,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
+import cloudinary.api
+import cloudinary.uploader
 # Create your views here.
 
 def user_login(request):
@@ -134,3 +136,38 @@ def search_images(request):
     else:
         message = 'Invalid Search'
         return render(request,'search.html',{'danger':message})
+
+def update_profile(request):
+    """Function for updating the user profile"""
+    if request.method =='POST':
+        current_user = request.user
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        bio = request.POST['bio']
+        profile_image = request.FILES['profilphoto']
+        profile_image = cloudinary.uploader.upload(profile_image)
+        profile_url = profile_image['url']
+
+        user = User.objects.get(id=current_user.id)
+
+        if Profile.objects.filter(username_id=current_user.id).exists():
+            profile = Profile.objects.get(username_id=current_user.id)
+            profile.photo = profile_url
+            profile.bio = bio
+            profile.save()
+        else:
+            profile = Profile.objects.get(username_id=current_user.id, photo=profile_url, bio=bio)
+            profile.save_profile()
+
+        user.first_name = first_name
+        user.last_name = last_name
+        user.username = username
+        user.email = email
+        user.save()
+        return redirect('/profile',{'success': 'Profile Update Successfull'})
+    else:
+        return render(request,'profile.html',{'danger': 'Profile update Failed'})
+        
+

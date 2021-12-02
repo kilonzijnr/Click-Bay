@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary',
     'clickbay',
     'django_bootstrap5',
     'django.contrib.admin',
