@@ -1,3 +1,4 @@
+from os import name
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -169,5 +170,22 @@ def update_profile(request):
         return redirect('/profile',{'success': 'Profile Update Successfull'})
     else:
         return render(request,'profile.html',{'danger': 'Profile update Failed'})
-        
+
+def save_image(request):
+    """Function for saving image"""
+    if request.method == 'POST':
+        image_name = request.POST['image_name']
+        image_caption = request.POST['image_caption']
+        image_file = request.FILES['image_file']
+        image_file = cloudinary.uploader.upload(image_file)
+        image_url = image_file['url']
+        image = Image(name=image_name,
+                    caption=image_caption,
+                    image=image_url,\
+                    profile_id=request.POST['user_id'], 
+                    user_id=request.POST['user_id'])
+        image.save_image()
+        return redirect('/',{'success': 'Image Upload Successful'})
+    else:
+        return render(request,'profile.html', {'danger': 'Image upload Failed'})
 
