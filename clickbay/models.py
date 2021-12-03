@@ -69,7 +69,7 @@ class Image(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=None)
     likes = models.ForeignKey(Likes, on_delete=CASCADE, default=None)
     comment = models.CharField(max_length=150)
-    time_posted = models.DateTimeField(auto_add_add = True)
+    time_posted = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
         return self.name

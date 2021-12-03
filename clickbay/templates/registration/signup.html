@@ -3,19 +3,41 @@
 {% block content%}
 
 {% if form.errors%}
-<div class="container">
-    <div class="alert text-center">
-        <span>There was a error with your form!</span>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .card{
+    max-width: 00px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    position: relative;
+    }
+</style>
+<body>
+    <div class="card">
+        <div class="alert text-center">
+            <span>There was a error with your form!</span>
+        </div>
+        {% endif %}
+        <div class="container">
+            <h5>{{ message }}</h5>
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+        
+                <button class="btn btn-outline-secondary" type="submit">Sign Up</button>
+            </form>
+        </div>
     </div>
-    {% endif %}
-    <div class="container">
-        <h5>{{ message }}</h5>
-        <form action="{% url 'signup' %}" method="post">
-            {% csrf_token %}
-            {% bootstrap_form form %}
     
-            <button class="btn btn-outline-secondary" type="submit">Sign Up</button>
-        </form>
-    </div>
-</div>
+</body>
+</html>
 {% endblock%}

@@ -10,6 +10,7 @@ gunicorn = "*"
 psycopg2 = "*"
 django-registration = "*"
 cloudinary = "*"
+pillow = "*"
 
 [dev-packages]
 

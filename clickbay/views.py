@@ -11,7 +11,7 @@ import cloudinary.uploader
 def user_login(request):
     """Function for user login"""
 
-    message = 'KINDLY LOGIN TO PROCEED'
+    message = 'Sign In!'
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -23,7 +23,7 @@ def user_login(request):
             return redirect('homepage')
         else:
             messages.success(request,"Something went wrong Kindly try to Login again")
-            return render(request,'reqistration/login.html')
+            return render(request,'registration/login.html')
     else:
         return render(request, 'registration/login.html',{"message":message})
 
@@ -148,7 +148,7 @@ def update_profile(request):
         email = request.POST['email']
         bio = request.POST['bio']
         profile_image = request.FILES['profilphoto']
-        profile_image = cloudinary.uploader.upload(profile_image)
+        # profile_image = cloudinary.uploader.upload(profile_image)
         profile_url = profile_image['url']
 
         user = User.objects.get(id=current_user.id)
@@ -177,7 +177,7 @@ def save_image(request):
         image_name = request.POST['image_name']
         image_caption = request.POST['image_caption']
         image_file = request.FILES['image_file']
-        image_file = cloudinary.uploader.upload(image_file)
+        # image_file = cloudinary.uploader.upload(image_file)
         image_url = image_file['url']
         image = Image(name=image_name,
                     caption=image_caption,
