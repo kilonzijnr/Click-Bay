@@ -151,6 +151,7 @@ def update_profile(request):
         bio = request.POST['bio']
         # profile_image = request.FILES['profile_image']
         profilephoto = cloudinary.uploader.upload(request.FILES['profilephoto'])
+        
         profile_url = profilephoto['url']
 
         user = User.objects.get(id=current_user.id)
@@ -169,6 +170,7 @@ def update_profile(request):
         user.username = username
         user.email = email
         user.save()
+        return profilephoto
         return redirect('/profile',{'success': 'Profile Update Successfull'})
     else:
         return render(request,'profile.html',{'danger': 'Profile update Failed'})
