@@ -176,7 +176,7 @@ def update_profile(request):
 def save_image(request):
     """Function for saving image"""
     if request.method == 'POST':
-        image_name = request.POST['imagename']
+        image_name = request.POST['image_name']
         image_caption = request.POST['image_caption']
         image_file = request.FILES['image_file']
         image_file = cloudinary.uploader.upload(image_file)
