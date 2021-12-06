@@ -183,7 +183,7 @@ def save_image(request):
         image_url = image_file['url']
         image = Image(name=image_name,
                     caption=image_caption,
-                    image=image_url,\
+                    image=image_url,
                     profile_id=request.POST['user_id'], 
                     user_id=request.POST['user_id'])
         image.save_image()
