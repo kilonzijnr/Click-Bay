@@ -60,8 +60,8 @@ class Image(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = CloudinaryField('images')
-    imagename = models.CharField(max_length=25)
-    caption = models.CharField(max_length=150)
+    image_name = models.CharField(max_length=25)
+    image_caption = models.CharField(max_length=150)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=None)
     comment = models.CharField(max_length=150)
     post_time = models.DateTimeField(auto_now_add = True)
@@ -74,7 +74,7 @@ class Image(models.Model):
     def __str__(self):
         return self.imagename
 
-    def save_images(self):
+    def save_image(self):
         """Method for saving images"""
         self.save()
 
