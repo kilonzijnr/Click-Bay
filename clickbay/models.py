@@ -58,12 +58,12 @@ class Profile(models.Model):
 class Image(models.Model):
     """Model for handling photo posts by users"""
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     image = CloudinaryField('images')
     image_name = models.CharField(max_length=25)
     image_caption = models.CharField(max_length=150)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=None)
-    comment = models.CharField(max_length=150)
+    comment = models.CharField(max_length=150 )
     post_time = models.DateTimeField(auto_now_add = True)
     total_comments = models.IntegerField(default=0)
     total_likes = models.IntegerField(default=0)
