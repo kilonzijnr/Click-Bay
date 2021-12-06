@@ -6,6 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 import cloudinary.api
 import cloudinary.uploader
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 # Create your views here.
 
 def user_login(request):
@@ -74,22 +77,22 @@ def like_image(request, id):
             image.total_likes = 0
             image.save()
         else:
-            image.total_likes -= 1
+            image.total_likes += 1
             image.save()
-        return redirect('/')
+        return redirect('homepage')
     else:
         likes = Likes(image_id=id, user_id=request.user.id)
         likes.save()
         image = Image.objects.get(id=id)
-        image.total_likes = image.total_liks +1
+        image.total_likes = image.total_likes +1
         image.save()
-        return redirect('/')
+        return redirect('homepage')
 
 def image_comments(request, id):
     """Display function for image comments"""
     image = Image.objects.get(id=id)
     related_images = Image.objects.filter(user_id=image.user_id)
-    title = image.name
+    title = image.imagename
     if Image.objects.filter(id=id).exists():
         comments = Comments.objects.filter(image_id=id)
         return render(request,'photos.html',
@@ -111,17 +114,16 @@ def save_comment(request):
         comment.save_comment()
         image.total_comments = image.total_comments + 1
         image.save()
-        return redirect('/snapcomment/'+str(image_id))
-    else:
-        return redirect('/')
+        return redirect('homepage')
 
 def user_profile(request,id):
     """Display function for filtering a specific user"""
     if User.objects.filter(id=id).exists():
         user = User.objects.get(id=id)
         images = Image.objects.filter(user_id=id)
+        followers = Profile.total_followers()
         profile = Profile.objects.filter(username_id=id).first()
-        return render(request,'user.html',{'images':images,'profile':profile, 'user':user})
+        return render(request,'user.html',{'images':images,'profile':profile, 'user':user, 'followers':followers})
     else:
         return redirect('/')
 
@@ -147,8 +149,8 @@ def update_profile(request):
         username = request.POST['username']
         email = request.POST['email']
         bio = request.POST['bio']
-        profile_image = request.FILES['profilphoto']
-        # profile_image = cloudinary.uploader.upload(profile_image)
+        profile_image = request.FILES['profilephoto']
+        profile_image = cloudinary.uploader.upload(profile_image)
         profile_url = profile_image['url']
 
         user = User.objects.get(id=current_user.id)
@@ -177,7 +179,7 @@ def save_image(request):
         image_name = request.POST['image_name']
         image_caption = request.POST['image_caption']
         image_file = request.FILES['image_file']
-        # image_file = cloudinary.uploader.upload(image_file)
+        image_file = cloudinary.uploader.upload(image_file)
         image_url = image_file['url']
         image = Image(name=image_name,
                     caption=image_caption,
@@ -189,3 +191,13 @@ def save_image(request):
     else:
         return render(request,'profile.html', {'danger': 'Image upload Failed'})
 
+def FollowView(request,pk):
+    """This handles liking a profile
+    Args:
+        request ([type]): [description]
+        pk ([type]): [description]
+    """
+    profile = get_object_or_404(Profile, pk = request.POST['profile_pk'])
+    profile.followers.add(request.user)
+    pk = profile.user.pk
+    return HttpResponseRedirect(reverse('profile', args=[str(pk)]))

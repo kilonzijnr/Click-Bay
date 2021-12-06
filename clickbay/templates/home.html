@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block content %} {%load static%} {% include "navbar.html" %}
+<section>
+  <div class="container mt-5" style="border-radius: 20px; border: transparent;">
+    <div class="row w-50 mx-auto">
+      {% for image in images %}
+      <div class="card border-secondary mb-3 col-sm-12 col-md-12 col-lg-12" style="max-width: 100%">
+        <div class="card-header bg-transparent border-secondary" style="display: flex; align-items: end">
+          <img src="{{image.user.profile.profilephoto.url}}" alt="" style="
+                    height: 30px;
+                    width: 30px;
+                    border-radius: 50%;
+                    margin-right: 15px;"
+ />
+          <h6><strong>{{image.user.username}}</strong></h6>
+        </div>
+        <div class="card-body">
+          <img class="img-fluid" src="{{image.image.url}}" alt="" />
+          <div class="d-flex justify-content-start" style="padding: 10px 0 10px 20px;">
+            <div>
+              <p>
+                <a href="{% url 'like_image' image.id %}" style="margin-right: 20px;"><img
+                    src="https://www.svgrepo.com/show/13686/like.svg" alt="" /></a>
+              </p>
+            </div>
+            <div>
+              <p>
+                <a href="{% url 'single_image' image.id %}" style="margin-right: 30px;"><img
+                    src="https://www.svgrepo.com/show/357585/comments.svg" alt="" /></a>
+            </div>
+          </div>
+          <div style="padding: 20px;">
+            <strong>{{image.total_likes }} likes</strong>
+            <p>
+            <h6 class="">
+                <h6 style="display:inline;"><strong>{{image.user.username}}</strong></h6>
+                {{ image.caption}}<small><span class="text-muted"></span></small>
+            </h6><br><br>
+            <a href="{% url 'single_image' image.id %}">
+            View Comments {{image.total_comments}}
+            </p></a>
+            {{image.post_time | timesince}} ago
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

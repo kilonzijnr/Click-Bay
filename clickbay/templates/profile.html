@@ -1,0 +1,168 @@
+{% extends "base.html" %} {% block content %} {% include "navbar.html" %}
+<div
+  class="card d-flex w-50 mx-auto"
+  style="
+    padding:20px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    max-width:800px">
+   
+  <div class="profile-photo"style="margin-right: 50px;">
+    {% if profile.photo %}
+    <img
+      src="{{profile.photo.url}}"
+      alt=""
+      class="card-img-top"
+      style="width: 200px; height: 200px; border-radius: 50%"
+    />
+    {%else%}
+    <img class="img-responsive" src="https://img.icons8.com/ios/2x/user--v2.gif" alt="">
+    {% endif %}
+  </div>
+  <div style="display:flex; justify-content:flex-start;">
+    <button type="button" class="btn btn-outline-secondary">Followers<span class="badge bg-secondary">{{followers}}</span></button>
+    <button type="button" class="btn btn-outline-secondary">Following<span class="badge bg-secondary">4</span></button>
+    </div>
+  <div class="card-body" style="padding: 20px">
+    <p><h3>{{ user.username }}</h3></p>
+    <h6 class="card-text"><strong>{{ user.first_name }} {{ user.last_name }}</strong></h6>
+    <p>
+      {% if profile.bio %}
+      <small>{{ profile.bio }}</small>
+      {% else %}
+      <span class="">No bio</span>
+      {% endif %}
+    </p>
+<div class="photo" style="float: right;">
+    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+        <i class="fa fa-plus"></i> Add Photo
+    </button>
+    <!-- modal -->
+    <div class="modal fade in" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'save.image' %}" method="post"
+                        enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="image_name">Name</label>
+                            <input type="text" class="form-control" value="" name="image_name"
+                                required>
+                        </div>
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <div class="form-group mt-3">
+                            <label for="exampleFormControlTextarea1">Caption</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                name="image_caption" required></textarea>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="exampleFormControlFile1">Upload Photo</label>
+                            <input type="file" class="form-control" id="exampleFormControlFile1"
+                                name="image_file" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+  <div class="row mt-3 mb-3">
+    <div class="col-md-12">
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#profileModal">Edit Profile</button>
+            <div class="modal fade in" id="profileModal" tabindex="-1" role="dialog"
+                aria-labelledby="profileModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="profileModalLabel">Update Profile</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'update_profile' %}" method="POST"enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-group mb-3">
+                                    <label for="name">First Name</label>
+                                    <input type="text" class="form-control" id="first_name"
+                                        name="first_name" value="{{ user.first_name }}">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="name">Last Name</label>
+                                    <input type="text" class="form-control" id="last_name"
+                                        name="last_name" value="{{ user.last_name }}">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username"
+                                        name="username" value="{{ user.username }}">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ user.email}}">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="bio">Bio</label>
+                                    <textarea name="bio" id="bio" cols="30" rows="10"
+                                        class="form-control">{{ profile.bio }}</textarea>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="profile_pic">Profile Picture</label>
+                                    <input type="file" class="form-control" id="profile_pic"
+                                        name="profile.photo" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-outline-danger">Update Account</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="col-md-9">
+    <div class="row">
+        {% if success %}
+        <div class="alert alert-success" role="alert">
+            {{ success }}
+        </div>
+        {% elif danger %}
+        <div class="alert alert-danger" role="alert">
+            {{ danger }}
+        </div>
+        {% endif %}
+<div class="row w-50 mx-auto text-center">
+    <p><h3><strong>Posts by {{ user.username }}</strong></h3></p>
+    {% for image in images %}
+    <div class="col-md-4">
+        <a href="{% url 'single_image' image.id %}">
+            <div class="card mb-4">
+                <img src="{{ image.image.url }}" class="card-img-tops" alt="Image">
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="alert alert-info" role="alert">
+            No images!
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}
