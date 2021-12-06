@@ -181,7 +181,7 @@ def save_image(request):
         image_file = request.FILES['image_file']
         image_file = cloudinary.uploader.upload(image_file)
         image_url = image_file['url']
-        image = Image(image_name=image_name,image_caption=image_caption,image=image_url,profile_id=request.POST['profile_id'],profile_id=request.POST['profile_id'])
+        image = Image(image_name=image_name,image_caption=image_caption,image=image_url,profile_id=request.POST['profile_id'])
         image.save_image()
         return redirect('/',{'success': 'Image Upload Successful'})
     else:
