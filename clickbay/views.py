@@ -9,7 +9,6 @@ import cloudinary.uploader
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from pprint import pprint
 # Create your views here.
 
 def user_login(request):
@@ -150,7 +149,6 @@ def update_profile(request):
         username = request.POST['username']
         email = request.POST['email']
         bio = request.POST['bio']
-        pprint(dir(request.FILES))
         # profile_image = request.FILES['profile_image']
         profilephoto = cloudinary.uploader.upload(request.FILES['profilephoto'])
         
