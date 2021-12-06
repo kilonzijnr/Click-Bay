@@ -11,6 +11,8 @@ psycopg2 = "*"
 django-registration = "*"
 cloudinary = "*"
 pillow = "*"
+django-heroku = "*"
+django-decouple = "*"
 
 [dev-packages]
 
