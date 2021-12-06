@@ -150,18 +150,18 @@ def update_profile(request):
         email = request.POST['email']
         bio = request.POST['bio']
         # profile_image = request.FILES['profile_image']
-        profile_image = cloudinary.uploader.upload(request.FILES['profile_image'])
-        profile_url = profile_image['url']
+        profilephoto = cloudinary.uploader.upload(request.FILES['profilephoto'])
+        profile_url = profilephoto['url']
 
         user = User.objects.get(id=current_user.id)
 
         if Profile.objects.filter(username_id=current_user.id).exists():
             profile = Profile.objects.get(username_id=current_user.id)
-            profile.photo = profile_url
+            profile.profilephoto = profile_url
             profile.bio = bio
             profile.save()
         else:
-            profile = Profile.objects.get(username_id=current_user.id, photo=profile_url, bio=bio)
+            profile = Profile.objects.get(username_id=current_user.id, profilephoto=profile_url, bio=bio)
             profile.save_profile()
 
         user.first_name = first_name
