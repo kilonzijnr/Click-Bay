@@ -149,7 +149,7 @@ def update_profile(request):
         username = request.POST['username']
         email = request.POST['email']
         bio = request.POST['bio']
-        profile_image = request.FILES['profilephoto']
+        profile_image = request.FILES['profile_image']
         profile_image = cloudinary.uploader.upload(profile_image)
         profile_url = profile_image['url']
 
@@ -183,7 +183,7 @@ def save_image(request):
         image_url = image_file['url']
         image = Image(image_name=image_name,image_caption=image_caption,image=image_url,user_id=request.POST['user_id'])
         image.save_image()
-        return redirect('/',{'success': 'Image Upload Successful'})
+        return redirect('homepage',{'success': 'Image Upload Successful'})
     else:
         return render(request,'profile.html', {'danger': 'Image upload Failed'})
 
