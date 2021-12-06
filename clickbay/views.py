@@ -120,7 +120,7 @@ def user_profile(request,id):
     """Display function for filtering a specific user"""
     if User.objects.filter(id=id).exists():
         user = User.objects.get(id=id)
-        images = Image.objects.filter(profile_id=id)
+        images = Image.objects.filter(user_id=id)
         followers = Profile.total_followers()
         profile = Profile.objects.filter(username_id=id).first()
         return render(request,'user.html',{'images':images,'profile':profile, 'user':user, 'followers':followers})
@@ -181,7 +181,7 @@ def save_image(request):
         image_file = request.FILES['image_file']
         image_file = cloudinary.uploader.upload(image_file)
         image_url = image_file['url']
-        image = Image(image_name=image_name,image_caption=image_caption,image=image_url,profile_id=request.POST['profile_id'])
+        image = Image(image_name=image_name,image_caption=image_caption,image=image_url,profile_id=request.POST['profile_id'], user_id=request.POST['user_id'])
         image.save_image()
         return redirect('/',{'success': 'Image Upload Successful'})
     else:
