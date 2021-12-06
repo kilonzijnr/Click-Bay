@@ -183,7 +183,7 @@ def save_image(request):
         image_url = image_file['url']
         image = Image(image_name=image_name,image_caption=image_caption,image=image_url,user_id=request.POST['user_id'])
         image.save_image()
-        return redirect('',{'success': 'Image Upload Successful'})
+        return redirect('/homepage',{'success': 'Image Upload Successful'})
     else:
         return render(request,'profile.html', {'danger': 'Image upload Failed'})
 
