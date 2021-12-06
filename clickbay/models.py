@@ -74,10 +74,6 @@ class Image(models.Model):
     def __str__(self):
         return self.imagename
 
-    def save_image(self):
-        """Method for saving images"""
-        self.save()
-
     def delete_image(self):
         """Method for deleting image"""
         self.delete()
