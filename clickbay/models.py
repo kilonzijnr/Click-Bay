@@ -58,7 +58,7 @@ class Profile(models.Model):
 class Image(models.Model):
     """Model for handling photo posts by users"""
 
-    profile = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     image = CloudinaryField('images')
     image_name = models.CharField(max_length=25)
     image_caption = models.CharField(max_length=150)
