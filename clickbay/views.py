@@ -63,14 +63,14 @@ def homepage(request):
 def profile(request):
     """Display function for user profile"""
     current_user = request.user
-    images = Image.objects.filter(profile_id=current_user.id)
+    images = Image.objects.filter(user_id=current_user.id)
     profile = Profile.objects.filter(username=current_user).first()
     return render(request,'profile.html', {"images":images, "profile":profile})
 
 def like_image(request, id):
     """Display function for Image Likes"""
     likes = Likes.objects.filter(image_id=id).first()
-    if Likes.objects.filter(image_id=id, profile_id=request.profile.id).exists():
+    if Likes.objects.filter(image_id=id, user_id=request.user.id).exists():
         likes.delete()
         image = Image.objects.get(id=id)
         if image.total_likes == 0:
@@ -81,7 +81,7 @@ def like_image(request, id):
             image.save()
         return redirect('homepage')
     else:
-        likes = Likes(image_id=id, profile_id=request.user.id)
+        likes = Likes(image_id=id, user_id=request.user.id)
         likes.save()
         image = Image.objects.get(id=id)
         image.total_likes = image.total_likes +1
@@ -91,7 +91,7 @@ def like_image(request, id):
 def image_comments(request, id):
     """Display function for image comments"""
     image = Image.objects.get(id=id)
-    related_images = Image.objects.filter(profile_id=image.profile_id)
+    related_images = Image.objects.filter(user_id=image.user_id)
     title = image.imagename
     if Image.objects.filter(id=id).exists():
         comments = Comments.objects.filter(image_id=id)
@@ -110,7 +110,7 @@ def save_comment(request):
         image_id = request.POST['image_id']
         image = Image.objects.get(id=image_id)
         user = request.user
-        comment = Comments(comment=comment, image_id=image_id, profile_id=user.id)
+        comment = Comments(comment=comment, image_id=image_id, user_id=user.id)
         comment.save_comment()
         image.total_comments = image.total_comments + 1
         image.save()
@@ -181,7 +181,7 @@ def save_image(request):
         image_file = request.FILES['image_file']
         image_file = cloudinary.uploader.upload(image_file)
         image_url = image_file['url']
-        image = Image(image_name=image_name,image_caption=image_caption,image=image_url,profile_id=request.POST['profile_id'],user_id=1)
+        image = Image(image_name=image_name,image_caption=image_caption,image=image_url,user_id=request.POST['user_id'])
         image.save_image()
         return redirect('/',{'success': 'Image Upload Successful'})
     else:

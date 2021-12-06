@@ -62,7 +62,7 @@ class Image(models.Model):
     image = CloudinaryField('images')
     image_name = models.CharField(max_length=25)
     image_caption = models.CharField(max_length=150)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=None)
+    # profile = models.ForeignKey(Profile, on_delete=models.CASCADE, default=None)
     comment = models.CharField(max_length=150 )
     post_time = models.DateTimeField(auto_now_add = True)
     total_comments = models.IntegerField(default=0)
