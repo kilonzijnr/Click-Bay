@@ -149,8 +149,8 @@ def update_profile(request):
         username = request.POST['username']
         email = request.POST['email']
         bio = request.POST['bio']
-        profile_image = request.FILES['profile_image']
-        profile_image = cloudinary.uploader.upload(profile_image)
+        # profile_image = request.FILES['profile_image']
+        profile_image = cloudinary.uploader.upload(request.FILES['profile_image'])
         profile_url = profile_image['url']
 
         user = User.objects.get(id=current_user.id)
