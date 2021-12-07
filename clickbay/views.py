@@ -169,6 +169,7 @@ def update_profile(request):
         user.last_name = last_name
         user.username = username
         user.email = email
+        user.bio = bio
         user.save()
         return redirect('/profile',{'success': 'Profile Update Successfull'})
     else:
