@@ -53,6 +53,11 @@ class Profile(models.Model):
     def search_profile(cls, search_query):
         profile = cls.objects.filter(username__icontains = search_query)
         return profile
+
+    @classmethod
+    def get_profile_by_username(cls, username):
+        profile = cls.objects.filter(username=username)
+        return profile
     
 class Image(models.Model):
     """Model for handling photo posts by users"""
