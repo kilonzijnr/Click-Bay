@@ -9,7 +9,8 @@
         </div>
         {% endfor %}
     {% else %}
-    <h1>sorry the searched profile doesn't exist</h1>
+    <h1>{{message}}</h1>
+    <!-- <h1>sorry the searched profile for {{message}}doesn't exist</h1> -->
     {% endif %}
 </div>
 {% endblock %}

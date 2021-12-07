@@ -131,12 +131,16 @@ def search_images(request):
     if 'profile' in request.GET and request.GET['profile']:
         search_query = request.GET.get('profile')
         searched_profiles = Profile.search_profile(search_query)
-        message = f'{search_query}'
-        context = {
-           'message':message,
-           'searched_profiles':searched_profiles
-        }
-        return render (request, 'search.html', context)
+        if searched_profiles:
+            message = f'{search_query}'
+            context = {
+            'message':message,
+            'searched_profiles':searched_profiles
+            }
+            return render (request, 'search.html', context)
+        else:
+            message = f'{search_query + " profile does not exist"}'
+            return render(request, 'search.html', {'message':message})
     else:
         message = 'You havent searched for any profile'
         return render(request, 'search.html', {'message':message})
