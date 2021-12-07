@@ -2,8 +2,6 @@ from django.test import TestCase
 from .models import Image, Profile, Likes
 
 # Create your tests here.
-
-
 class ImageTest(TestCase):
     def setUp(self):
         self.profile = Profile(name='kilonzi')
