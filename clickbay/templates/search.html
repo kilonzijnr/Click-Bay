@@ -1,41 +1,4 @@
-<!-- {% extends 'base.html' %}
-{% block content %}
-<div class="container search">
-    {% if searched_profiles %}
-        {% for profile in searched_profiles %}
-        <h2>{{ profile.username }}</h2>
-        <h2>{{profile.bio}}</h2>
-        <h2></h2>
-        <img src="{{ profile.profilephoto.url  }}" alt="">
-        
-        <div class="row w-50 mx-auto text-center">
-            <p><h3><strong>Posts by {{ user.username }}</strong></h3></p>
-                <a href="{% url 'single_image' image.id %}">
-                    <div class="card mb-4">
-                        <img src="{{ image.image.url }}" class="card-img-tops" alt="Image">
-                    </div>    {% for image in images %}
-            <div class="col-md-4">
-        
-                </a>
-            </div>
-            {% empty %}
-            <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <div class="alert alert-info" role="alert">
-                    No images!
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endfor %}
-    {% else %}
-    <h1>{{message}}</h1>
-    <!-- <h1>sorry the searched profile for {{message}}doesn't exist</h1> -->
-    {% endif %}
-</div>
-{% endblock %} -->
 
-<!-- jkpppnnm;o -->
 
 {% extends "base.html" %} {% block content %} {%load static%}
 <!-- search result -->
