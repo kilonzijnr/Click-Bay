@@ -128,17 +128,18 @@ def user_profile(request,id):
         return redirect('/')
 
 def search_images(request):
-    """View functtion for searching for images"""
-    if 'search' in request.GET and request.GET['search']:
-        search_term = request.GET.get ('search').lower()
-        images = Image.search_by_image(search_term)
-        message = f'{search_term}'
-        title = message
-
-        return render(request, 'search.html', {'success':message, 'images':images, "title":title})
+    if 'profile' in request.GET and request.GET['profile']:
+        search_query = request.GET.get('profile')
+        searched_profiles = Profile.search_profile(search_query)
+        message = f'{search_query}'
+        context = {
+           'message':message,
+           'searched_profiles':searched_profiles
+        }
+        return render (request, 'search.html', context)
     else:
-        message = 'Invalid Search'
-        return render(request,'search.html',{'danger':message})
+        message = 'You havent searched for any profile'
+        return render(request, 'search.html', {'message':message})
 
 def update_profile(request):
     """Function for updating the user profile"""
