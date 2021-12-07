@@ -156,13 +156,13 @@ def update_profile(request):
 
         user = User.objects.get(id=current_user.id)
 
-        if Profile.objects.filter(username_id=current_user.id).exists():
-            profile = Profile.objects.get(username_id=current_user.id)
+        if Profile.objects.filter(user_id=current_user.id).exists():
+            profile = Profile.objects.get(user_id=current_user.id)
             profile.profilephoto = profile_url
             profile.bio = bio
             profile.save()
         else:
-            profile = Profile.objects.get(username_id=current_user.id, profilephoto=profile_url, bio=bio)
+            profile = Profile.objects.get(user_id=current_user.id, profilephoto=profile_url, bio=bio)
             profile.save_profile()
 
         user.first_name = first_name
