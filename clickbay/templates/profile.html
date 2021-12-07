@@ -8,9 +8,9 @@
     max-width:800px">
    
   <div class="profile-photo"style="margin-right: 50px;">
-    {% if profile.profilephoto %}
+    {% if profile.photo %}
     <img
-      src="{{profile.profilephoto.url}}"
+      src="{{profile.photo.url}}"
       alt=""
       class="card-img-top"
       style="width: 200px; height: 200px; border-radius: 50%"
@@ -148,12 +148,12 @@
         {% endif %}
 <div class="row w-50 mx-auto text-center">
     <p><h3><strong>Posts by {{ user.username }}</strong></h3></p>
+    {% for image in images %}
+    <div class="col-md-4">
         <a href="{% url 'single_image' image.id %}">
             <div class="card mb-4">
                 <img src="{{ image.image.url }}" class="card-img-tops" alt="Image">
-            </div>    {% for image in images %}
-    <div class="col-md-4">
-
+            </div>
         </a>
     </div>
     {% empty %}
@@ -166,6 +166,3 @@
     {% endfor %}
 </div>
 {%endblock%}
-
-<!-- jninininiuinnnii -->
-
