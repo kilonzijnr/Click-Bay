@@ -9,6 +9,7 @@ import cloudinary.uploader
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.models import User
 # Create your views here.
 
 def user_login(request):
@@ -131,12 +132,15 @@ def search_images(request):
     if 'profile' in request.GET and request.GET['profile']:
         profile = User.username
         search_query = request.GET.get('profile')
-        searched_profiles = Profile.search_profile(search_query)
+        searched_profiles = User.objects.filter(username__icontains = search_query)
+        # searched_profiles = Profile.search_profile(search_query)
+        # searched_profiles = Profile.search_profile(search_query)
         if searched_profiles:
             message = f'{search_query}'
             context = {
             'message':message,
-            'searched_profiles':searched_profiles
+            'searched_profiles':searched_profiles,
+            # 'my_user':my_user
             }
             return render (request, 'search.html', context)
         else:
