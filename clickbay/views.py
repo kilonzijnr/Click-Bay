@@ -162,7 +162,7 @@ def update_profile(request):
             profile.bio = bio
             profile.save()
         else:
-            profile = Profile.objects.get(user_id=current_user.id, profilephoto=profile_url, bio=bio)
+            profile = Profile(user_id=current_user.id, profilephoto=profile_url, bio=bio)
             profile.save_profile()
 
         user.first_name = first_name
