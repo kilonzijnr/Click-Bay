@@ -4,8 +4,8 @@
     {% if searched_profiles %}
         {% for profile in searched_profiles %}
         <h2>{{ profile.username }}</h2>
-        <h2>{{profile.bio}}</h2>
-        <h2></h2>
+        <h2>{{profile.email}}</h2>
+        <h2>{{profile.first_name}}{{profile.last_name}}</h2>
         <img src="{{ profile.profilephoto.url  }}" alt="">
         {% endfor %}
     {% else %}
