@@ -148,12 +148,12 @@
         {% endif %}
 <div class="row w-50 mx-auto text-center">
     <p><h3><strong>Posts by {{ user.username }}</strong></h3></p>
-    {% for image in images %}
-    <div class="col-md-4">
         <a href="{% url 'single_image' image.id %}">
             <div class="card mb-4">
                 <img src="{{ image.image.url }}" class="card-img-tops" alt="Image">
-            </div>
+            </div>    {% for image in images %}
+    <div class="col-md-4">
+
         </a>
     </div>
     {% empty %}
