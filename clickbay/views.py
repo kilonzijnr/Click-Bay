@@ -128,8 +128,8 @@ def user_profile(request,id):
         return redirect('/')
 
 def search_images(request):
-    if 'profile' in request.GET and request.GET['profile']:
-        search_query = request.GET.get('profile')
+    if 'username' in request.GET and request.GET['username']:
+        search_query = request.GET.get('username')
         searched_profiles = Profile.search_profile(search_query)
         if searched_profiles:
             message = f'{search_query}'
