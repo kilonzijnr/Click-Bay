@@ -128,16 +128,23 @@ def user_profile(request,id):
         return redirect('/')
 
 def search_images(request):
-    if 'search' in request.GET and request.GET['search']:
-        search_term = request.GET.get('search').lower()
-        images = Image.search_by_image_name(search_term)
-        message = f'{search_term}'
-        title = message
-
-        return render(request, 'search.html', {'success': message, 'images': images})
+    if 'profile' in request.GET and request.GET['profile']:
+        profile = User.username
+        search_query = request.GET.get('profile')
+        searched_profiles = Profile.search_profile(search_query)
+        if searched_profiles:
+            message = f'{search_query}'
+            context = {
+            'message':message,
+            'searched_profiles':searched_profiles
+            }
+            return render (request, 'search.html', context)
+        else:
+            message = f'{search_query + " profile does not exist"}'
+            return render(request, 'search.html', {'message':message, 'username':profile})
     else:
-        message = 'You havent searched for any term'
-        return render(request, 'search.html', {'danger': message})
+        message = 'You havent searched for any profile'
+        return render(request, 'search.html', {'message':message})
 
 def update_profile(request):
     """Function for updating the user profile"""
