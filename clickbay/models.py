@@ -50,10 +50,9 @@ class Profile(models.Model):
         return users
 
     @classmethod
-    def search_profile(cls, search_term):
-        """Method to enable search functionality which returns specific user profile"""
-        profiles = cls.objects.filter(username_icontains = search_term)
-        return profiles
+    def search_profile(cls, search_query):
+        profile = cls.objects.filter(username__icontains = search_query)
+        return profile
     
 class Image(models.Model):
     """Model for handling photo posts by users"""
