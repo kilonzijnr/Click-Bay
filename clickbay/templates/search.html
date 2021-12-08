@@ -1,16 +1,37 @@
 {% extends 'base.html' %}
-{% block content %}
+<!-- {% block content %}
 <div class="container search">
     {% if searched_profiles %}
         {% for profile in searched_profiles %}
         <h2>{{ profile.username }}</h2>
         <h2>{{profile.email}}</h2>
-        <h2>{{profile.first_name}}{{profile.last_name}}</h2>
-        <img src="{{ profile.profilephoto.url  }}" alt="">
+        <h2>{{profile.first_name}}||{{profile.last_name}}</h2>
+        <img src="{{ profile.profilephoto  }}" alt="">
         {% endfor %}
     {% else %}
     <h1>{{message}}</h1>
-    <!-- <h1>sorry the searched profile for {{message}}doesn't exist</h1> -->
+    <h1>sorry the searched profile for {{message}}doesn't exist</h1>
     {% endif %}
 </div>
-{% endblock %}
+{% endblock %} -->
+
+ <!-- card trial -->
+{% extends 'base.html' %}
+{% block content %}
+ <div class="container search">
+    {% if searched_profiles %}
+    {% for profile in searched_profiles %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ profile.profilephoto  }}" alt="Profile Photo">
+        <div class="card-body">
+          <h5 class="card-title">{{ profile.username }</h5>
+          <p class="card-text">{{profile.email}}</p>
+          <a href="{% url 'profile'%}" class="btn btn-danger">Profile</a>
+        </div>
+      </div>
+        {% endfor %}
+    {% else %}
+    <h1>{{message}}</h1>
+    {% endif %
+ </div>
+ {% endblock %}
