@@ -5,9 +5,9 @@
     {% if searched_profiles %}
         {% for profile in searched_profiles %}
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ profile.profilephoto  }}" alt="Profile Photo">
+                <img class="card-img-top" src="https://img.icons8.com/ios/2x/user--v2.gif" alt="Profile Photo">
                 <div class="card-body">
-                <h5 class="card-title">{{ profile.username }</h5>
+                <h5 class="card-title">{{ profile.username }}</h5>
                 <p class="card-text">{{profile.email}}</p>
                 <a href="{% url 'profile'%}" class="btn btn-danger">Profile</a>
                 </div>
