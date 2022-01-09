@@ -161,7 +161,7 @@ def update_profile(request):
         bio = request.POST['bio']
         # profile_image = request.FILES['profile_image']
         profilephoto = cloudinary.uploader.upload(request.FILES['profilephoto'])
-        
+
         profile_url = profilephoto['url']
 
         user = User.objects.get(id=current_user.id)
